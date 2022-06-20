@@ -1,7 +1,10 @@
-﻿using System;
+﻿using Microsoft.Xrm.Sdk;
+using System;
 using System.Text;
 using XrmEarth.Logger;
 using XrmEarth.Logger.Common;
+using XrmEarth.Logger.Configuration;
+using XrmEarth.Logger.Connection;
 using XrmEarth.Logger.Enums;
 using XrmEarth.Logger.Exceptions;
 using XrmEarth.Samples.Base;
@@ -11,6 +14,13 @@ namespace XrmEarth.Samples.Samples
 {
     public class SimpleCrm : BaseSample
     {
+        public IOrganizationService Service { get; set; }
+
+        public SimpleCrm(IOrganizationService service)
+        {
+            Service = service;
+        }
+
         protected override void OnRun()
         {
             #region - INIT -
@@ -36,22 +46,19 @@ namespace XrmEarth.Samples.Samples
 
             #region - LOGGER -
 
-            //var authenticator = new CrmAuthenticator("")
-            //{
-            //    Domain = "",
-            //    UserName = "",
-            //    Password = "",
-            //};
-            //var orgService = authenticator.Authenticate();
-            //var crmConnection = new CrmConnection(orgService);
+            InitConfiguration.InjectApplication = false;
+            InitConfiguration.OverrideAssembly = System.Reflection.Assembly.GetAssembly(typeof(SimpleCrm));
+            CrmConnection test = new CrmConnection();
+            ApplicationShared.ConnectionComparers[typeof(CrmConnection)] = new CrmConnectionCustomComparer();
 
-            //var crmLogger = LogManager.CreateLogger(crmConnection);
+            var crmConnection = new CrmConnection(Service);
+            var crmLogger = LogManager.CreateLogger(crmConnection);
 
             #endregion - LOGGER -
 
             #region - REGISTRATION -
 
-            //LogManager.RegisterAll(crmLogger);
+            LogManager.RegisterAll(crmLogger);
 
             #endregion - REGISTRATION -
 
@@ -149,4 +156,6 @@ namespace XrmEarth.Samples.Samples
         }
         #endregion - EVENTS - 
     }
+
+    
 }

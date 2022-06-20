@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Tooling.Connector;
+using XrmEarth.Samples.Samples;
 
 namespace XrmEarth.Samples
 {
@@ -9,9 +10,10 @@ namespace XrmEarth.Samples
         {
             CrmServiceClient adminClientService = XrmConnection.AdminCrmClient;
 
-            IOrganizationService orgService = adminClientService.GetOrganizationService();
+            IOrganizationService service = adminClientService.GetOrganizationService();
 
-
+            SimpleCrm simpleCrm = new SimpleCrm(service);
+            simpleCrm.Run();
         }
     }
 }

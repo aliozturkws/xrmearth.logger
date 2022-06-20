@@ -15,6 +15,7 @@ namespace XrmEarth.Logger
         {
             if (ApplicationShared.ConnectionComparers != null) ApplicationShared.ConnectionComparers[typeof(CrmConnection)] = new CrmConnectionComparer();
             //ApplicationShared.ConnectionComparers.Add(typeof(CrmConnection), new CrmConnectionComparer());
+            //ApplicationShared.ConnectionComparers.Add(typeof(CrmConnection), new CrmConnectionCustomComparer());
         }
 
         public CrmConnection()

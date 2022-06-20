@@ -10,35 +10,35 @@ namespace XrmEarth.Logger
     {
         public bool Equals(IConnection x, IConnection y)
         {
-            return false;
-            //var connection1 = x as CrmConnection;
-            //var connection2 = y as CrmConnection;
+            //return false;
+            var connection1 = x as CrmConnection;
+            var connection2 = y as CrmConnection;
 
-            //if (connection1 == null || connection2 == null)
-            //{
-            //    if (connection1 == null && connection2 == null)
-            //    {
-            //        return true;
-            //    }
-            //    return false;
-            //}
+            if (connection1 == null || connection2 == null)
+            {
+                if (connection1 == null && connection2 == null)
+                {
+                    return true;
+                }
+                return false;
+            }
 
-            //var endpoint1 = GetEndpoint(connection1.Service);
-            //var endpoint2 = GetEndpoint(connection2.Service);
+            var endpoint1 = GetEndpoint(connection1.Service);
+            var endpoint2 = GetEndpoint(connection2.Service);
 
-            //if (endpoint1 == null || endpoint2 == null)
-            //{
-            //    if (endpoint1 == null && endpoint2 == null)
-            //    {
-            //        return true;
-            //    }
-            //    return false;
-            //}
+            if (endpoint1 == null || endpoint2 == null)
+            {
+                if (endpoint1 == null && endpoint2 == null)
+                {
+                    return true;
+                }
+                return false;
+            }
 
-            //var uri1 = endpoint1.ListenUri.ToString();
-            //var uri2 = endpoint2.ListenUri.ToString();
+            var uri1 = endpoint1.ListenUri.ToString();
+            var uri2 = endpoint2.ListenUri.ToString();
 
-            //return uri1.Equals(uri2, StringComparison.OrdinalIgnoreCase);
+            return uri1.Equals(uri2, StringComparison.OrdinalIgnoreCase);
         }
 
         public int GetHashCode(IConnection obj)
@@ -53,9 +53,22 @@ namespace XrmEarth.Logger
 
         public ServiceEndpoint GetEndpoint(IOrganizationService service)
         {
-            return null;
-            //var serviceProxy = service as ServiceProxy<IOrganizationService>;
-            //return serviceProxy == null ? null : serviceProxy.ServiceManagement.CurrentServiceEndpoint;
+            //return null;
+            var serviceProxy = service as ServiceProxy<IOrganizationService>;
+            return serviceProxy == null ? null : serviceProxy.ServiceManagement.CurrentServiceEndpoint;
+        }
+    }
+
+    public class CrmConnectionCustomComparer : IConnectionComparer
+    {
+        public bool Equals(IConnection x, IConnection y)
+        {
+            return false;
+        }
+
+        public int GetHashCode(IConnection obj)
+        {
+            return obj == null ? 0 : obj.GetHashCode();
         }
     }
 }

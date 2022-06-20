@@ -22,11 +22,10 @@ namespace XrmEarth.Logger
             {
                 {typeof (MssqlConnection), new MssqlConnectionComparer()},
                 {typeof (ConsoleConnection), new ConsoleConnectionComparer()},
-                {typeof(FileConnection), new FileConnectionComparer() }
+                {typeof(FileConnection), new FileConnectionComparer() },
             };
 
             SharedInstances = new Dictionary<int, ApplicationContainer>();
-
 
             if (!InitConfiguration.InjectApplication)
             {
