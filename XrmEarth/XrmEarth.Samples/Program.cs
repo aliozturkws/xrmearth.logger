@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Tooling.Connector;
-using XrmEarth.Samples.Samples;
 
 namespace XrmEarth.Samples
 {

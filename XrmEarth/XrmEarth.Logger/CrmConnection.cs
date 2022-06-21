@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.Xrm.Sdk;
-using Microsoft.Xrm.Sdk.Metadata;
-using XrmEarth.Logger;
+﻿using Microsoft.Xrm.Sdk;
 using XrmEarth.Logger.Connection;
 using XrmEarth.Logger.Target;
 

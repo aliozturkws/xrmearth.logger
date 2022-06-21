@@ -21,7 +21,7 @@ namespace XrmEarth.Samples.Base
         public void Run()
         {
             var name = GetType().Name;
-            Output.WriteLine(name + " başladı.");
+            Output.WriteLine(name + " started.");
 
             try
             {
@@ -32,7 +32,7 @@ namespace XrmEarth.Samples.Base
                 Output.WriteLine(ex.ToString());
             }
 
-            Output.WriteLine(name + " tamamlandı.");
+            Output.WriteLine(name + " completed.");
         }
 
         protected abstract void OnRun();

@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using XrmEarth.Logger.Enums;
+﻿using XrmEarth.Logger.Enums;
 
 namespace XrmEarth.Logger.Common
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public class SystemNotifyArgs
     {
         public string Message { get; set; }

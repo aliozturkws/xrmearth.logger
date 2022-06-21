@@ -58,17 +58,17 @@ namespace XrmEarth.Samples
         {
             if (string.IsNullOrEmpty(clientId))
             {
-                throw new ArgumentNullException("clientId", "clientId parametresi NULL olamaz.");
+                throw new ArgumentNullException("clientId", "clientId not NULL!");
             }
 
             if (string.IsNullOrEmpty(clientSecret))
             {
-                throw new ArgumentNullException("clientSecret", "clientSecret parametresi NULL olamaz.");
+                throw new ArgumentNullException("clientSecret", "clientSecret not NULL!");
             }
 
             if (string.IsNullOrEmpty(organizationName))
             {
-                throw new ArgumentNullException("organizationName", "organizationName parametresi NULL olamaz.");
+                throw new ArgumentNullException("organizationName", "organizationName not NULL!");
             }
 
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;

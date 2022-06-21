@@ -36,7 +36,7 @@ namespace XrmEarth.Logger.Common
                 }
                 else
                 {
-                    throw new Exception(string.Format("Dosya ismi geçersiz formattaydı. Dosya adı: {0}", existFileName));
+                    throw new Exception(string.Format("The filename is in an invalid format. File name: {0}", existFileName));
                 }
             }
             else
