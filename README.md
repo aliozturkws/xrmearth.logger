@@ -39,7 +39,7 @@ var crmLogger = LogManager.CreateLogger(crmConnection);
 LogManager.RegisterAll(CrmLogger);
 ```
 
-#### Usage
+#### Usage :floppy_disk:
 ```
 crmLogger.Info("Test Log Message", 15);
 crmLogger.Error("Test Error", 1501, "Tag1 Value","Tag2 Value");
