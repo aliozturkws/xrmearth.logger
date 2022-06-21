@@ -13,16 +13,16 @@ namespace XrmEarth.Logger.Connection
         public bool EnableSsl { get; set; }
         /// <summary>
         /// Format;<para/>
-        /// Gönderen Adı, Gönderen Adresi<para/>
-        /// <code>Örn: Ali Öztürk, aliozturkws@gmail.com<para/></code>
+        /// From Name, From Address<para/>
+        /// <code>Örn: Ali Öztürk, test@gmail.com<para/></code>
         /// </summary>
         public Tuple<string, string> FromAddress { get; set; }
         /// <summary>
         /// Format;
         /// <para/>
-        /// Gönderen Adı, Gönderen Adresi
+        /// From Name, From Address
         /// <para/>
-        /// <code>Örn: [{Ali Öztürk, aliozturkws@gmail.com}]</code>
+        /// <code>Örn: [{Ali Öztürk, test@gmail.com}]</code>
         /// </summary>
         public Tuple<string, string>[] ToAddresses { get; set; }
 

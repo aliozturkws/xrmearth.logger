@@ -4,9 +4,9 @@ using System.Text;
 namespace XrmEarth.Logger.Configuration
 {
     /// <summary>
-    /// Yapılandırma ayarları.
+    /// Configuration settings.
     /// <para></para>
-    /// <code>Not: Log atma işlemlerinden önce yapılandırılması gerekir.</code>
+    /// <code>Note: It must be configured before logging operations.</code>
     /// </summary>
     public static class InitConfiguration
     {
@@ -17,19 +17,19 @@ namespace XrmEarth.Logger.Configuration
         }
 
         /// <summary>
-        /// Sistemin takip etmesini istediğiniz uygulama.
+        /// The application you want the system to follow.
         /// <para></para>
-        /// <code>Not: Sistem artık bu uygulamayı takip edeceği için mevcut assembly'ye ait bilgiler saklanmayacaktır.</code>
+        /// <code>Note: Since the system will now follow this application, the information of the current assembly will not be stored.</code>
         /// </summary>
         public static Assembly OverrideAssembly { get; set; }
 
         /// <summary>
-        /// Uygulama takibi yapılacak mı? (Varsayılan değer, True)
+        /// Will the application be tracked? (Default value is True)
         /// <para></para>
-        /// Uygulamayı takip edilerek; çalıştığı saat, kapandığı saat, başlangıç argümanları vb. bilgiler saklanır. 
+        /// By following the application; time it runs, time it shuts down, startup arguments, etc. information is stored.
         /// <para></para>
         /// <para></para>
-        /// <code>!!!NOT: Sandbox vb. gibi kullanımlar için False olarak atanması gerekir.</code>
+        /// <code>!!!NOTE: Sandbox etc. It must be set to False for such uses.</code>
         /// </summary>
         public static bool InjectApplication { get; set; }
 

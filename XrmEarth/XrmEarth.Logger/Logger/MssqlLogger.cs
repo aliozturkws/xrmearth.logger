@@ -28,11 +28,11 @@ namespace XrmEarth.Logger.Logger
         protected override void OnPush(Dictionary<string, object> keyValuesDictionary)
         {
             if(!keyValuesDictionary.ContainsKey(BaseRenderer.TypeKey))
-                throw new KeyNotFoundException(string.Format("Render nesnesi '{0}' isminde renderer nesnesinin tipini göndermelidir.", BaseRenderer.TypeKey));
+                throw new KeyNotFoundException(string.Format("The render object must send the type of renderer object named '{0}'.", BaseRenderer.TypeKey));
 
             var rendererType = keyValuesDictionary[BaseRenderer.TypeKey] as Type;
             if(rendererType == null)
-                throw new NullReferenceException(string.Format("'{0}' anahtarı renderer nesnesini tipini saklamalıdır.", BaseRenderer.TypeKey));
+                throw new NullReferenceException(string.Format("The '{0}' key must store the renderer object type.", BaseRenderer.TypeKey));
 
             if (rendererType.IsAssignableFrom(typeof (MssqlSPRendererBase)))
             {
@@ -40,7 +40,7 @@ namespace XrmEarth.Logger.Logger
                 var parameters = keyValuesDictionary[MssqlSPRendererBase.ParametersKey] as List<SqlParameter>;
 
                 if(spName == null)
-                    throw new NullReferenceException(string.Format("'{0}' tipindeki renderer nesnesinde SP adı alanı boş bırakılmış.", rendererType.Name));
+                    throw new NullReferenceException(string.Format("SP name field left blank in renderer object of type '{0}'.", rendererType.Name));
 
                 if (parameters == null)
                 {
@@ -57,7 +57,7 @@ namespace XrmEarth.Logger.Logger
                 var parameters = keyValuesDictionary[MssqlQueryRendererBase.ParametersKey] as List<SqlParameter>;
 
                 if (query == null)
-                    throw new NullReferenceException(string.Format("'{0}' tipindeki renderer nesnesinde Query alanı boş bırakılmış.", rendererType.Name));
+                    throw new NullReferenceException(string.Format("The Query field is left blank in the renderer object of type '{0}'.", rendererType.Name));
 
                 if (parameters == null)
                 {
@@ -70,7 +70,7 @@ namespace XrmEarth.Logger.Logger
             }
             else
             {
-                throw new NotSupportedException(string.Format("Desteklenmeyen renderer tipi : '{0}'", rendererType.Name));
+                throw new NotSupportedException(string.Format("Unsupported renderer type : '{0}'", rendererType.Name));
             }
         }
 

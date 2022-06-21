@@ -15,14 +15,14 @@ using XrmEarth.Logger.Target;
 namespace XrmEarth.Logger
 {
     /// <summary>
-    /// Log sistemi yönetimini yapar. Belirtilen hedeflere log atar.
+    /// Performs log system management. Logs to specified targets.
     /// <para></para>
-    /// Yapılandırma ayarları için önce InitConfiguration static sınıfını kullanın. (XrmEarth.Logger.Configuration.InitConfiguration)
+    /// For configuration settings, first use the InitConfiguration static class. (XrmEarth.Logger.Configuration.InitConfiguration)
     /// <para></para>
-    /// Yapılandırma ayarları yapıldıktan sonra 'CreateLogger' metodlarıyla Loglayıcılar oluşturulur. Daha sonra sonrasında kullanıma göre bu loglayıcılar 'RegisterAll', 'Register', 'Unregister', 'UnregisterAll', 'ClearLoggers' metodları kullanılarak
-    /// tiplere bağlanır. Bu sayede Uyarı ve bilgi logları SQL ortamına atılırken, hata tipindeki logların hem SQL hemde Mail ile gönderimi sağlanabilir.
+    /// Loggers are created with the 'CreateLogger' methods after the configuration settings are made. Then, according to usage, these loggers can be used by using 'RegisterAll', 'Register', 'Unregister', 'UnregisterAll', 'ClearLoggers' methods.
+    /// binds to types. In this way, warning and information logs can be sent to the SQL environment, while error-type logs can be sent by both SQL and Mail.
     /// <para></para>
-    /// Kayıt işlemleri de tamamlandıktan sonra 'Push' metodlarını kullanarak loglama işlemlerinizi gerçekleştirebilirsiniz.
+    /// After the registration process is completed, you can perform your logging operations using the 'Push' methods.
     /// </summary>
     public class LogManager
     {
@@ -57,12 +57,12 @@ namespace XrmEarth.Logger
             var attr = connType.GetCustomAttribute<DefaultTargetAttribute>();
             if (attr == null)
             {
-                throw new Exception(string.Format("'{0}' bağlantısı için varsayılan hedef tanımlanmamış. ([DefaultTarget(typeof(LogTarget))])", connType.Name));
+                throw new Exception(string.Format("'{0}' no default destination defined for connection. ([DefaultTarget(typeof(LogTarget))])", connType.Name));
             }
 
             if (!attr.IsValid())
             {
-                throw new Exception(string.Format("'{0}' bağlantısı varsayılan hedef geçersiz tanımlanmış. Hedef boş olmamalıdır ve '{1}' sınıfından türemiş olmalıdır.", connType.Name, typeof(LogTarget).Name));
+                throw new Exception(string.Format("'{0}' connection default target defined invalid. Target must not be null and must derive from class '{1}'.", connType.Name, typeof(LogTarget).Name));
             }
             var lTarget = (LogTarget) Activator.CreateInstance(attr.Target);
             lTarget.Connection = connection;
@@ -187,9 +187,9 @@ namespace XrmEarth.Logger
         #region - Static [ PUBLIC ACCESSIBLE ] -
 
         /// <summary>
-        /// Bağlantı üzerinden loglayıcı oluşturur.
+        /// Creates a logger over the connection.
         /// </summary>
-        /// <param name="connection">Bağlantı</param>
+        /// <param name="connection"></param>
         /// <returns></returns>
         public static CoreLogger CreateLogger(IConnection connection)
         {
@@ -197,10 +197,10 @@ namespace XrmEarth.Logger
         }
 
         /// <summary>
-        /// Hedef üzerinden loglayıcı oluşturur.
+        /// Creates a logger on the target.
         /// </summary>
-        /// <typeparam name="T">CoreLogger nesnesinden türemiş olmalıdır.</typeparam>
-        /// <param name="target">Hedef</param>
+        /// <typeparam name="T">It must derive from the CoreLogger object.</typeparam>
+        /// <param name="target"></param>
         /// <returns></returns>
         public static T CreateLogger<T>(LogTarget target) where T : CoreLogger
         {
@@ -208,9 +208,9 @@ namespace XrmEarth.Logger
         }
 
         /// <summary>
-        /// Belirtilen loglayıcı bütün tiplerdeki logları kaydedecektir, bu sayede loglayıcı bütün logları bağlı olduğu sisteme gönderecektir.
+        /// The specified logger will record all types of logs, so the logger will send all logs to the system it is connected to.
         /// </summary>
-        /// <param name="logger">Loglayıcı</param>
+        /// <param name="logger"></param>
         public static void RegisterAll(CoreLogger logger)
         {
             foreach (var logType in Enum.GetValues(typeof(LogType)))
@@ -219,10 +219,10 @@ namespace XrmEarth.Logger
             }
         }
         /// <summary>
-        /// Belirtilen loglayıcıyı verilen tipe bağlar, bu sayede aynı tipte gönderilen loglar belirtilmiş loglayıcı tarafından sisteme gönderilir.
+        /// It binds the specified logger to the given type, so that the logs sent in the same type are sent to the system by the specified logger.
         /// </summary>
-        /// <param name="logType">Log tipi</param>
-        /// <param name="logger">Loglayıcı</param>
+        /// <param name="logType"></param>
+        /// <param name="logger"></param>
         /// <returns>Kayıt işlemi sonucu</returns>
         public static bool Register(LogType logType, CoreLogger logger)
         {
@@ -240,11 +240,11 @@ namespace XrmEarth.Logger
             return hs.Add(logger);
         }
         /// <summary>
-        /// Belirtilen loglayıcıyı verilen tiple bağlılığını keser.
+        /// Disconnects the specified logger from the given type.
         /// </summary>
-        /// <param name="logType">Log tipi</param>
-        /// <param name="logger">Loglayıcı</param>
-        /// <returns>Silme işlemi sonucu</returns>
+        /// <param name="logType"></param>
+        /// <param name="logger"></param>
+        /// <returns></returns>
         public static bool Unregister(LogType logType, CoreLogger logger)
         {
             if (Instance.RegisteredLoggers.ContainsKey(logType))
@@ -254,10 +254,10 @@ namespace XrmEarth.Logger
             return false;
         }
         /// <summary>
-        /// Belirtilen loglayıcı bütün tiplerden temizler, bu sayede loglayıcı bir neyi devre dışı bırakılmış olur.
+        /// The specified logger clears all types, so that the logger is disabled something.
         /// </summary>
-        /// <param name="logger">Loglayıcı</param>
-        /// <returns>Silme işlemi sonucu</returns>
+        /// <param name="logger"></param>
+        /// <returns></returns>
         public static bool UnregisterAll(CoreLogger logger)
         {
             var isRemoved = false;
@@ -279,9 +279,9 @@ namespace XrmEarth.Logger
             return Instance.GetRegisteredLoggers();
         }
         /// <summary>
-        /// Bütün tipler için tanımlamaları temizler.
+        /// Clears definitions for all types.
         /// <para></para>
-        /// <code>Bu metod çağırıldıktan sonra 'LogManager' üzerinden çağırılan hiçbir 'Push' işlemi gönderim yapmayacaktır.</code>
+        /// <code>After this method is called, any 'Push' operation called from 'LogManager' will not send.</code>
         /// </summary>
         public static void ClearLoggers()
         {
@@ -292,13 +292,13 @@ namespace XrmEarth.Logger
         }
 
         /// <summary>
-        /// Bilgi tipinde log atar.
+        /// Logs in information type.
         /// </summary>
-        /// <param name="message">Mesaj</param>
-        /// <param name="logLevel">Seviye, uygulamanız içerisinde loglarınızı önceliklendirmek için kullanabilirsiniz.</param>
-        /// <param name="tag1">Etiket 1, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="tag2">Etiket 2, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="memberName">Bu parametreyi boş geçerseniz, otomatik olarak çağıran metodun ismini çeker.</param>
+        /// <param name="message">Message</param>
+        /// <param name="logLevel">The level you can use to prioritize your logs within your application.</param>
+        /// <param name="tag1">Tag 1 can be used to categorize your logs or store data.</param>
+        /// <param name="tag2">Tag 2, you can use it to categorize your logs or store data.</param>
+        /// <param name="memberName">If you leave this parameter blank, it will automatically retrieve the name of the calling method.</param>
         public static void Info(
             string message
             , int? logLevel = null
@@ -310,13 +310,13 @@ namespace XrmEarth.Logger
         }
 
         /// <summary>
-        /// Uyarı tipinde log atar.
+        /// It throws a warning type log.
         /// </summary>
-        /// <param name="message">Mesaj</param>
-        /// <param name="logLevel">Seviye, uygulamanız içerisinde loglarınızı önceliklendirmek için kullanabilirsiniz.</param>
-        /// <param name="tag1">Etiket 1, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="tag2">Etiket 2, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="memberName">Bu parametreyi boş geçerseniz, otomatik olarak çağıran metodun ismini çeker.</param>
+        /// <param name="message">Message</param>
+        /// <param name="logLevel">The level you can use to prioritize your logs within your application.</param>
+        /// <param name="tag1">Tag 1 can be used to categorize your logs or store data.</param>
+        /// <param name="tag2">Tag 2, you can use it to categorize your logs or store data.</param>
+        /// <param name="memberName">If you leave this parameter blank, it will automatically retrieve the name of the calling method.</param>
         public static void Warning(
             string message
             , int? logLevel = null
@@ -328,13 +328,13 @@ namespace XrmEarth.Logger
         }
 
         /// <summary>
-        /// Hata tipinde log atar.
+        /// It throws an error type log.
         /// </summary>
-        /// <param name="message">Mesaj</param>
-        /// <param name="logLevel">Seviye, uygulamanız içerisinde loglarınızı önceliklendirmek için kullanabilirsiniz.</param>
-        /// <param name="tag1">Etiket 1, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="tag2">Etiket 2, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="memberName">Bu parametreyi boş geçerseniz, otomatik olarak çağıran metodun ismini çeker.</param>
+        /// <param name="message">Message</param>
+        /// <param name="logLevel">The level you can use to prioritize your logs within your application.</param>
+        /// <param name="tag1">Tag 1 can be used to categorize your logs or store data.</param>
+        /// <param name="tag2">Tag 2, you can use it to categorize your logs or store data.</param>
+        /// <param name="memberName">If you leave this parameter blank, it will automatically retrieve the name of the calling method.</param>
         public static void Error(
             string message
             , int? logLevel = null
@@ -346,13 +346,13 @@ namespace XrmEarth.Logger
         }
 
         /// <summary>
-        /// Nesne tipinde log atar. (Veri veya nesne saklamak için bu tipi kullanabilirsiniz)
+        /// Throws log of object type. (You can use this type to store data or object)
         /// </summary>
-        /// <param name="message">Mesaj</param>
-        /// <param name="logLevel">Seviye, uygulamanız içerisinde loglarınızı önceliklendirmek için kullanabilirsiniz.</param>
-        /// <param name="tag1">Etiket 1, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="tag2">Etiket 2, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="memberName">Bu parametreyi boş geçerseniz, otomatik olarak çağıran metodun ismini çeker.</param>
+        /// <param name="message">Message</param>
+        /// <param name="logLevel">The level you can use to prioritize your logs within your application.</param>
+        /// <param name="tag1">Tag 1 can be used to categorize your logs or store data.</param>
+        /// <param name="tag2">Tag 2, you can use it to categorize your logs or store data.</param>
+        /// <param name="memberName">If you leave this parameter blank, it will automatically retrieve the name of the calling method.</param>
         public static void Object(
             string message
             , int? logLevel = null
@@ -364,13 +364,13 @@ namespace XrmEarth.Logger
         }
 
         /// <summary>
-        /// Durum tipinde log atar.
+        /// It throws a status type log.
         /// </summary>
-        /// <param name="message">Mesaj</param>
-        /// <param name="logLevel">Seviye, uygulamanız içerisinde loglarınızı önceliklendirmek için kullanabilirsiniz.</param>
-        /// <param name="tag1">Etiket 1, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="tag2">Etiket 2, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="memberName">Bu parametreyi boş geçerseniz, otomatik olarak çağıran metodun ismini çeker.</param>
+        /// <param name="message">Message</param>
+        /// <param name="logLevel">The level you can use to prioritize your logs within your application.</param>
+        /// <param name="tag1">Tag 1 can be used to categorize your logs or store data.</param>
+        /// <param name="tag2">Tag 2, you can use it to categorize your logs or store data.</param>
+        /// <param name="memberName">If you leave this parameter blank, it will automatically retrieve the name of the calling method.</param>
         public static void State(
             string message
             , int? logLevel = null
@@ -382,13 +382,13 @@ namespace XrmEarth.Logger
         }
 
         /// <summary>
-        /// Detay bilgi tipinde log atar. (Genellikle sadece özel durumlar için kullanılır, örneğin; 1000 kayıt üzerinde işlem yapıyorsunuz ve her kayıt için log atarken bu tipi kullanabilirsiniz)
+        /// It logs in detail information type. (Usually it is only used for special cases, for example, you are processing 1000 records and you can use this type when logging for each record)
         /// </summary>
-        /// <param name="message">Mesaj</param>
-        /// <param name="logLevel">Seviye, uygulamanız içerisinde loglarınızı önceliklendirmek için kullanabilirsiniz.</param>
-        /// <param name="tag1">Etiket 1, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="tag2">Etiket 2, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="memberName">Bu parametreyi boş geçerseniz, otomatik olarak çağıran metodun ismini çeker.</param>
+        /// <param name="message">Message</param>
+        /// <param name="logLevel">The level you can use to prioritize your logs within your application.</param>
+        /// <param name="tag1">Tag 1 can be used to categorize your logs or store data.</param>
+        /// <param name="tag2">Tag 2, you can use it to categorize your logs or store data.</param>
+        /// <param name="memberName">If you leave this parameter blank, it will automatically retrieve the name of the calling method.</param>
         public static void Trace(
             string message
             , int? logLevel = null
@@ -401,14 +401,14 @@ namespace XrmEarth.Logger
 
 
         /// <summary>
-        /// Log atar.
+        /// Logs.
         /// </summary>
-        /// <param name="message">Mesaj</param>
-        /// <param name="logType">Log tipi</param>
-        /// <param name="logLevel">Seviye, uygulamanız içerisinde loglarınızı önceliklendirmek için kullanabilirsiniz.</param>
-        /// <param name="tag1">Etiket 1, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="tag2">Etiket 2, loglarınızı kategorize etmek veya veri saklamak için kullanabilirsiniz.</param>
-        /// <param name="memberName">Bu parametreyi boş geçerseniz, otomatik olarak çağıran metodun ismini çeker.</param>
+        /// <param name="message">Message</param>
+        /// <param name="logType">Log type</param>
+        /// <param name="logLevel">The level you can use to prioritize your logs within your application.</param>
+        /// <param name="tag1">Tag 1 can be used to categorize your logs or store data.</param>
+        /// <param name="tag2">Tag 2, you can use it to categorize your logs or store data.</param>
+        /// <param name="memberName">If you leave this parameter blank, it will automatically retrieve the name of the calling method.</param>
         public static void Push(
             string message
             , LogType logType
@@ -432,50 +432,50 @@ namespace XrmEarth.Logger
 
 
         /// <summary>
-        /// Hata tipinde nesne logu atar.
+        /// It throws an error type object log.
         /// </summary>
-        /// <param name="value">Gönderilecek nesne. (Logger üzerinde nesneye tanımlanmış Renderer bulunmalıdır. Bkz. XrmEarth.Logger.Renderer.IRenderer)</param>
-        /// <param name="memberName">Bu parametreyi boş geçerseniz, otomatik olarak çağıran metodun ismini çeker.</param>
+        /// <param name="value">Object to send. (There must be a Renderer defined to the object on the Logger. See XrmEarth.Logger.Renderer.IRenderer)</param>
+        /// <param name="memberName">If you leave this parameter blank, it will automatically retrieve the name of the calling method.</param>
         public static void PushError(object value, [CallerMemberName] string memberName = "")
         {
             PushObject(value, LogType.Error);
         }
 
         /// <summary>
-        /// Bilgi tipinde nesne logu atar.
+        /// Sets an object log of information type.
         /// </summary>
-        /// <param name="value">Gönderilecek nesne. (Logger üzerinde nesneye tanımlanmış Renderer bulunmalıdır. Bkz. XrmEarth.Logger.Renderer.IRenderer)</param>
-        /// <param name="memberName">Bu parametreyi boş geçerseniz, otomatik olarak çağıran metodun ismini çeker.</param>
+        /// <param name="value">Object to send. (There must be a Renderer defined to the object on the Logger. See XrmEarth.Logger.Renderer.IRenderer)</param>
+        /// <param name="memberName">If you leave this parameter blank, it will automatically retrieve the name of the calling method.</param>
         public static void PushInfo(object value, [CallerMemberName] string memberName = "")
         {
             PushObject(value, LogType.Info);
         }
 
         /// <summary>
-        /// Durum tipinde nesne logu atar.
+        /// Sets a status type object log.
         /// </summary>
-        /// <param name="value">Gönderilecek nesne. (Logger üzerinde nesneye tanımlanmış Renderer bulunmalıdır. Bkz. XrmEarth.Logger.Renderer.IRenderer)</param>
-        /// <param name="memberName">Bu parametreyi boş geçerseniz, otomatik olarak çağıran metodun ismini çeker.</param>
+        /// <param name="value">Object to send. (There must be a Renderer defined to the object on the Logger. See XrmEarth.Logger.Renderer.IRenderer)</param>
+        /// <param name="memberName">If you leave this parameter blank, it will automatically retrieve the name of the calling method.</param>
         public static void PushState(object value, [CallerMemberName] string memberName = "")
         {
             PushObject(value, LogType.State);
         }
 
         /// <summary>
-        /// Detay bilgi tipinde nesne logu atar. (Genellikle sadece özel durumlar için kullanılır, örneğin; 1000 kayıt üzerinde işlem yapıyorsunuz ve her kayıt için log atarken bu tipi kullanabilirsiniz)
+        /// Sets object log in detail information type. (Usually it is only used for special cases, for example, you are processing 1000 records and you can use this type when logging for each record)
         /// </summary>
-        /// <param name="value">Gönderilecek nesne. (Logger üzerinde nesneye tanımlanmış Renderer bulunmalıdır. Bkz. XrmEarth.Logger.Renderer.IRenderer)</param>
-        /// <param name="memberName">Bu parametreyi boş geçerseniz, otomatik olarak çağıran metodun ismini çeker.</param>
+        /// <param name="value">Object to send. (There must be a Renderer defined to the object on the Logger. See XrmEarth.Logger.Renderer.IRenderer)</param>
+        /// <param name="memberName">If you leave this parameter blank, it will automatically retrieve the name of the calling method.</param>
         public static void PushTrace(object value, [CallerMemberName] string memberName = "")
         {
             PushObject(value, LogType.Trace);
         }
 
         /// <summary>
-        /// Uyarı tipinde nesne logu atar.
+        /// Throws a warning type object log.
         /// </summary>
-        /// <param name="value">Gönderilecek nesne. (Logger üzerinde nesneye tanımlanmış Renderer bulunmalıdır. Bkz. XrmEarth.Logger.Renderer.IRenderer)</param>
-        /// <param name="memberName">Bu parametreyi boş geçerseniz, otomatik olarak çağıran metodun ismini çeker.</param>
+        /// <param name="value">Object to send. (There must be a Renderer defined to the object on the Logger. See XrmEarth.Logger.Renderer.IRenderer)</param>
+        /// <param name="memberName">If you leave this parameter blank, it will automatically retrieve the name of the calling method.</param>
         public static void PushWarnig(object value, [CallerMemberName] string memberName = "")
         {
             PushObject(value, LogType.Warning);
@@ -483,11 +483,11 @@ namespace XrmEarth.Logger
 
 
         /// <summary>
-        /// Nesne logu atar.
+        /// Throws the object log.
         /// </summary>
-        /// <param name="value">Gönderilecek nesne. (Logger üzerinde nesneye tanımlanmış Renderer bulunmalıdır. Bkz. XrmEarth.Logger.Renderer.IRenderer)</param>
-        /// <param name="logType">Log tipi</param>
-        /// <param name="memberName">Bu parametreyi boş geçerseniz, otomatik olarak çağıran metodun ismini çeker.</param>
+        /// <param name="value">Object to send. (There must be a Renderer defined to the object on the Logger. See XrmEarth.Logger.Renderer.IRenderer)</param>
+        /// <param name="logType">Log type</param>
+        /// <param name="memberName">If you leave this parameter blank, it will automatically retrieve the name of the calling method.</param>
         public static void PushObject(object value, LogType logType = LogType.Object, [CallerMemberName] string memberName = "")
         {
             Instance.Push(logType, value);

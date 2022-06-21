@@ -7,7 +7,7 @@ using XrmEarth.Logger.Target;
 namespace XrmEarth.Logger.Connection
 {
     /// <summary>
-    /// ilk sefer için her zaman yeni dosya kullan gibi bir özellik eklenebilir.
+    /// A feature such as always use a new file for the first time can be added.
     /// </summary>
     [DefaultTarget(typeof(FileTarget))]
     public class FileConnection : IConnection
@@ -86,7 +86,7 @@ namespace XrmEarth.Logger.Connection
                 var newFileName = _fileName = GetFileNameFunc(_fileName);
                 var newPath = Path.Combine(Directory, newFileName);
                 CloseStream();
-                LogManager.Instance.OnCallSystemNotify(string.Format("'{0}' dosyası belirtilen limite ({1} MB) ulaştığı için '{2}' yeni dosya oluşturuluyor. Dizin: {3}", fileName, FileMBLimit, newFileName, newPath), 0, LogType.Info, false);
+                LogManager.Instance.OnCallSystemNotify(string.Format("Creating new file '{2}' because file '{0}' has reached the specified limit ({1} MB). Index: {3}", fileName, FileMBLimit, newFileName, newPath), 0, LogType.Info, false);
                 return GetFileStream(newFileName);
             }
 

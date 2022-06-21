@@ -613,7 +613,7 @@ namespace XrmEarth.Logger.Utility
         public static string CreateTableQuery(Type value, TableConfig config)
         {
             if(config == null)
-                throw new NullReferenceException("'config' nesnesi boş olamaz.");
+                throw new NullReferenceException("'config' object cannot be empty.");
             
             var props = value
                 .GetProperties(BindingFlags.Instance | BindingFlags.Public)

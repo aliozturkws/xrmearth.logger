@@ -81,26 +81,26 @@ namespace XrmEarth.Logger
         {
             public ApplicationLog(string logicalName) : base(logicalName, "Application Log", "Application Logs")
             {
-                Schema.Add(Fields.ApplicationInstanceID, Tuple.Create("Uygulama Örneği", AttributeTypeCode.Lookup));
-                Schema.Add(Fields.ParentCallerMember, Tuple.Create("Üst çağıran metod", AttributeTypeCode.String));
-                Schema.Add(Fields.CallerMember, Tuple.Create("Çağıran metod", AttributeTypeCode.String));
-                Schema.Add(Fields.Message, Tuple.Create("Mesaj", AttributeTypeCode.String));
-                Schema.Add(Fields.Type, Tuple.Create("Tip", AttributeTypeCode.Picklist));
-                Schema.Add(Fields.LogLevel, Tuple.Create("Log Seviyesi", AttributeTypeCode.Integer));
-                Schema.Add(Fields.Tag1, Tuple.Create("Etiket 1", AttributeTypeCode.String));
-                Schema.Add(Fields.Tag2, Tuple.Create("Etiket 2", AttributeTypeCode.String));
+                Schema.Add(Fields.ApplicationInstanceID, Tuple.Create("App", AttributeTypeCode.Lookup));
+                Schema.Add(Fields.ParentCallerMember, Tuple.Create("Parent Caller Method", AttributeTypeCode.String));
+                Schema.Add(Fields.CallerMember, Tuple.Create("Caller Method", AttributeTypeCode.String));
+                Schema.Add(Fields.Message, Tuple.Create("Message", AttributeTypeCode.String));
+                Schema.Add(Fields.Type, Tuple.Create("Type", AttributeTypeCode.Picklist));
+                Schema.Add(Fields.LogLevel, Tuple.Create("Log Level", AttributeTypeCode.Integer));
+                Schema.Add(Fields.Tag1, Tuple.Create("Tag 1", AttributeTypeCode.String));
+                Schema.Add(Fields.Tag2, Tuple.Create("Tag 2", AttributeTypeCode.String));
                 
                 OptionSets.Add(new OptionSetMetadata(new OptionMetadataCollection
                 {
-                    new OptionMetadata(CreateLabel("Bilgi"), 1),
-                    new OptionMetadata(CreateLabel("Uyarı"), 2),
-                    new OptionMetadata(CreateLabel("Hata"), 4),
-                    new OptionMetadata(CreateLabel("Nesne"), 8),
-                    new OptionMetadata(CreateLabel("Durum"), 16),
-                    new OptionMetadata(CreateLabel("Detay Bilgi"), 32),
+                    new OptionMetadata(CreateLabel("Info"), 1),
+                    new OptionMetadata(CreateLabel("Warning"), 2),
+                    new OptionMetadata(CreateLabel("Error"), 4),
+                    new OptionMetadata(CreateLabel("Object"), 8),
+                    new OptionMetadata(CreateLabel("State"), 16),
+                    new OptionMetadata(CreateLabel("Detail"), 32),
                 })
                 {
-                    DisplayName = CreateLabel("Log Tipi"),
+                    DisplayName = CreateLabel("Log Type"),
                     IsGlobal = false,
                     OptionSetType = OptionSetType.Picklist,
                     Name = Fields.Type
@@ -171,7 +171,6 @@ namespace XrmEarth.Logger
 
             public RelationshipMetadataBase FindRelation(EntityMetadata metadata, LogEntity logEntity)
             {
-                //var container = logEntity.EntityReferences.Single(er => er.AttributeName == AttributeName);
                 var selfLogicalName = logEntity.LogicalName;
                 var refLogicalName = IsInternal
                     ? GetLogicalName(ReferenceInternalType)

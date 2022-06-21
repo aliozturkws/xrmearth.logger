@@ -185,10 +185,6 @@
     <Content Include="Queries\Log SPs Create.sql" />
     <Content Include="Queries\Log Tables Create.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Renderer\Renderer\Base\" />
-    <Folder Include="Renderer\Renderer\Mssql\" />
-    <Folder Include="Renderer\Renderer\Smtp\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

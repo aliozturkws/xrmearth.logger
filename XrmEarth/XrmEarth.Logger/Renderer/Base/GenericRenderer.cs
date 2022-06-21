@@ -15,7 +15,7 @@ namespace XrmEarth.Logger.Renderer.Base
                 if (CheckType<T>(((IValueContainer) value).Value))
                     return OnRender((T) ((IValueContainer) value).Value);
             
-            throw new InvalidTypeException(string.Format("'{0}' tipi için '{1}' tipindeki 'IRenderer' sınıfı kullanılamaz.", value == null ? "Null" : value.GetType().Name, typeof(T).Name));
+            throw new InvalidTypeException(string.Format("The 'IRenderer' class of type '{1}' cannot be used for type '{0}'.", value == null ? "Null" : value.GetType().Name, typeof(T).Name));
         }
 
         protected abstract Dictionary<string, object> OnRender(T value);

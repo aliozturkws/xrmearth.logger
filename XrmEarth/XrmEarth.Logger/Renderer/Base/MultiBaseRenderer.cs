@@ -82,7 +82,7 @@ namespace XrmEarth.Logger.Renderer.Base
         {
             var oType = GetType(value);
             if (!_resolvers.ContainsKey(oType))
-                throw new RendererNotFoundException(string.Format("'{0}' tipine ait 'IRenderer' nesnesi bulunamadı.", oType));
+                throw new RendererNotFoundException(string.Format("Could not find object 'IRenderer' of type '{0}'.", oType));
 
             return _resolvers[oType];
         }

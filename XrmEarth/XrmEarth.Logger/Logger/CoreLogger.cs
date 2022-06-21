@@ -116,7 +116,7 @@ namespace XrmEarth.Logger.Logger
 
         protected void HandleException(Exception exception, object logObject)
         {
-            LogManager.Instance.OnCallUnhandledException(new UnhandledException("Loglama işlemi sırasında bir hata meydana geldi. Detay için 'UnhandledException.Object' özelliğine bakın.", exception) { Object = logObject });
+            LogManager.Instance.OnCallUnhandledException(new UnhandledException("An error occurred during the logging process. See property 'UnhandledException.Object' for details.", exception) { Object = logObject });
         }
 
 

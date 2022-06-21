@@ -33,7 +33,7 @@ namespace XrmEarth.Logger
             var entity = TryGet<Microsoft.Xrm.Sdk.Entity>(keyValuesDictionary, CrmRendererBase.EntityKey);
             if (entity == null)
             {
-                OnPushSystemNotify("Gönderilecek varlık bulunamadığı için loglama işlemi iptal edildi.", LogType.Warning, 100001);
+                OnPushSystemNotify("Logging was canceled because the entity to send could not be found.", LogType.Warning, 100001);
                 return;
             }
 

@@ -34,7 +34,7 @@ namespace XrmEarth.Logger.Renderer.Base
             _defaultRendererSelectionAction = key =>
             {
                 if (!_resolvers.ContainsKey(key))
-                    throw new RendererNotFoundException(string.Format("'{0}' anahtarına ait 'IRenderer' nesnesi bulunamadı.", key));
+                    throw new RendererNotFoundException(string.Format("Could not find object 'IRenderer' for key '{0}'.", key));
 
                 return _resolvers[key];
             };
@@ -104,7 +104,7 @@ namespace XrmEarth.Logger.Renderer.Base
         {
             var keyValueContainer = value as IKeyValueContainer<TKey>;
             if (keyValueContainer == null)
-                throw new InvalidTypeException(string.Format("'{0}' tipi render edilmek için geçersizdi. Nesne '{1}' tipinden türemiş olmalı.", value == null ? "Null" : value.GetType().Name, typeof(IKeyValueContainer<TKey>).Name));
+                throw new InvalidTypeException(string.Format("Type '{0}' was invalid to render. The object must derive from type '{1}'.", value == null ? "Null" : value.GetType().Name, typeof(IKeyValueContainer<TKey>).Name));
 
             return keyValueContainer;
         }

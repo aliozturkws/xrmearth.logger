@@ -9,9 +9,6 @@ using XrmEarth.Logger.Exceptions;
 
 namespace XrmEarth.Logger
 {
-    /// <summary>
-    /// Sonraki sürümlerde Public olarak açılacak. Kütüphane iç dinamiklerine buradan müdahele edilecek.
-    /// </summary>
     public static class ApplicationShared
     {
         static ApplicationShared()
@@ -44,7 +41,7 @@ namespace XrmEarth.Logger
                 }
                 else
                 {
-                    LogManager.Instance.OnCallUnhandledException(new UnhandledException("Beklenmedik bir hata meydana geldi ve hata tespit edilemedi. Nesne için 'UnhandledException.Object' özelliğine bakın.", null, args.IsTerminating, UnhandledExceptionType.Application) { Object = args.ExceptionObject });
+                    LogManager.Instance.OnCallUnhandledException(new UnhandledException("An unexpected error has occurred and the error cannot be detected. See property 'UnhandledException.Object' for the object.", null, args.IsTerminating, UnhandledExceptionType.Application) { Object = args.ExceptionObject });
                 }
             };
 
@@ -64,13 +61,11 @@ namespace XrmEarth.Logger
 
                     if (callerPath == asmPath)
                     {
-                        LogManager.Instance.OnCallSystemNotify(string.Format("Takip edilecek uygulama revize edildi. \r\nEski Uygulama: {0} \r\nYeni Uygulama: {1}", Summary.Assembly.Location, callerPath), 99, LogType.Warning, false);
+                        LogManager.Instance.OnCallSystemNotify(string.Format("The application to be followed has been revised. \r\nOld App: {0} \r\nNew App: {1}", Summary.Assembly.Location, callerPath), 99, LogType.Warning, false);
                         Summary = new ApplicationSummary(assembly);
                     }
                 }
             }
-
-            //Summary = InitConfiguration.OverrideAssembly != null ? new ApplicationSummary(InitConfiguration.OverrideAssembly) : new ApplicationSummary(Assembly.GetCallingAssembly());
         }
 
         public static CultureInfo CultureInfo { get; set; }
@@ -94,7 +89,7 @@ namespace XrmEarth.Logger
 
         private static readonly DateTime StartTime = DateTime.Now;
         /// <summary>
-        /// Uygulamanın başlama zamanı. Bir şekilde Process bilgisine erişilemezse, ilk erişim tarihini baz alarak başlama zamanı döner.
+        /// Application start time. If the Process information is somehow inaccessible, the start time is returned based on the date of the first access.
         /// </summary>
         public static DateTime SafeStartTime
         {
@@ -124,10 +119,10 @@ namespace XrmEarth.Logger
         }
 
         /// <summary>
-        /// Gönderilen bağlantıyla ilişkilenmiş 'ApplicationContainer'i döner.<para/>
-        /// Daha öncesinde bağlantı eşleştiricisinin 'ConnectionComparers' listesine kaydedilmiş olması gerekir, aksi takdirde yeni 'ApplicationContainer' nesnesi oluşturulup dönecektir.<para/>
-        /// Varsıyalın eşleştiriciler eklenmiştir. 'MssqlConnection -> MssqlConnectionComparer', 'FileConnection -> FileConnectionComparer', 'ConsoleConnection -> ConsoleConnectionComparer'.<para/>
-        /// <code>Not: XrmEarth.Logger kütüphanesi 'CrmConnection' eşleştiricisini otomatik ekler.</code>
+        // Returns the 'ApplicationContainer' associated with the sent link.<para/>
+        /// The connection mapper must be registered in the 'ConnectionComparers' list before, otherwise the new 'ApplicationContainer' object will be created and returned.<para/>
+        /// Added default matchers. 'MssqlConnection -> MssqlConnectionComparer', 'FileConnection -> FileConnectionComparer', 'ConsoleConnection -> ConsoleConnectionComparer'.<para/>
+        /// <code>Note: The XrmEarth.Logger library automatically adds the 'CrmConnection' mapper.</code>
         /// </summary>
         /// <param name="connection">Bağlantı</param>
         /// <returns></returns>

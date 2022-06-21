@@ -70,7 +70,7 @@ namespace XrmEarth.Logger.Renderer
                 return;
 
             if (sParam.SqlDbType != SqlDbType.UniqueIdentifier)
-                throw new InvalidTypeException(string.Format("'{0}' tipindeki nesne Guid e çevrilemez.", sParam.SqlDbType));
+                throw new InvalidTypeException(string.Format("Object of type '{0}' cannot be converted to Guid.", sParam.SqlDbType));
 
             var id = Guid.Parse(sParam.Value.ToString());
             if (id == Guid.Empty)

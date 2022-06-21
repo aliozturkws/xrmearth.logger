@@ -21,7 +21,7 @@ namespace XrmEarth.Logger
         public string InitializeEnvironment()
         {
             if (Connection == null)
-                throw new NullReferenceException("Connection boş olamaz.");
+                throw new NullReferenceException("Connection cannot be empty.");
 
             var sb = new StringBuilder();
 
@@ -56,7 +56,7 @@ namespace XrmEarth.Logger
                     {
                         var entityReport = (EntityMetadataReport)report;
                         stringBuilder
-                            .Append("<- Varlık ->")
+                            .Append("<- Entity ->")
                             .AppendLine()
                             .Append(entityReport.Schema.GetType().Name).Append(" - ").Append(entityReport.Schema.LogicalName)
                             .AppendLine();
@@ -88,7 +88,7 @@ namespace XrmEarth.Logger
             {
                 stringBuilder
                     .Append(report.MetadataType)
-                    .Append(" geçerli.");
+                    .Append(" valid.");
             }
             else
             {
@@ -96,20 +96,20 @@ namespace XrmEarth.Logger
                 switch (report.RepairOption)
                 {
                     case RepairOption.None:
-                        repOptTxt = "Yok";
+                        repOptTxt = "None";
                         break;
                     case RepairOption.Create:
-                        repOptTxt = "Oluşturma";
+                        repOptTxt = "Create";
                         break;
                     case RepairOption.DeleteCreate:
-                        repOptTxt = "Mevcudu silip yeniden oluşturma";
+                        repOptTxt = "DeleteCreate";
                         break;
                     default:
                         throw new ArgumentOutOfRangeException();
                 }
                 stringBuilder
                     .Append(report.MetadataType)
-                    .Append(" geçersiz. Onarım Türü: ")
+                    .Append(" invalid. Repair Type: ")
                     .Append(repOptTxt);
             }
         }
@@ -121,7 +121,7 @@ namespace XrmEarth.Logger
                 var entityReport = report as EntityMetadataReport;
                 if (entityReport == null)
                     throw new NullReferenceException(
-                        "Rapor beklenen şekilde değildi. Entity raporlarının EntityMetadataReport tipinde olması gerekir.");
+                        "The report was not as expected. Entity reports must be of type EntityMetadataReport.");
 
                 RepairEntity(entityReport);
 
@@ -160,7 +160,7 @@ namespace XrmEarth.Logger
             {
                 var entityReport = report.GetTopReport() as EntityMetadataReport;
                 if (entityReport == null)
-                    throw new NullReferenceException("Geçersiz rapor yapısı.");
+                    throw new NullReferenceException("Invalid report structure.");
 
                 var schema = entityReport.Schema;
                 var field = schema.Schema.Single(s => s.Key == report.LogicalName);
@@ -214,7 +214,7 @@ namespace XrmEarth.Logger
                             DeleteEntityResponse;
                     if (deleteResponse == null)
                         throw new NullReferenceException(
-                            "Cevap beklenen şekilde değildi. Initializer>RepairEntity>ServiceExecute_DeleteEntityResponse");
+                            "The answer was not as expected. Initializer>RepairEntity>ServiceExecute_DeleteEntityResponse");
                 }
 
                 var fields = entityReport.Schema.Schema;
@@ -224,7 +224,7 @@ namespace XrmEarth.Logger
                 var entityResponse = Connection.Service.Execute(entityRequest) as CreateEntityResponse;
                 if (entityResponse == null)
                     throw new NullReferenceException(
-                        "Cevap beklenen şekilde değildi. Initializer>RepairEntity>ServiceExecute_CreateEntityResponse");
+                        "The answer was not as expected. Initializer>RepairEntity>ServiceExecute_CreateEntityResponse");
 
                 var primaryAttribute = entityReport.Schema.PrimaryAttribute();
                 foreach (var field in fields)
@@ -246,7 +246,7 @@ namespace XrmEarth.Logger
 
                     if (attributeResponse == null)
                         throw new NullReferenceException(
-                            "Cevap beklenen şekilde değildi. Initializer>RepairEntity>ServiceExecute_CreateAttributeResponse");
+                            "The answer was not as expected. Initializer>RepairEntity>ServiceExecute_CreateAttributeResponse");
                 }
             }
         }
@@ -278,7 +278,7 @@ namespace XrmEarth.Logger
         {
             var relation = entity.EntityReferences.FirstOrDefault(os => os.AttributeName == field.Key);
             if (relation == null)
-                throw new NullReferenceException(field.Key + " isminde relation tanımı bulunamadı.");
+                throw new NullReferenceException(field.Key + " no relation definition found in name.");
 
             var selfLogicalName = entity.LogicalName;
             var refLogicalName = relation.IsInternal
@@ -448,7 +448,7 @@ namespace XrmEarth.Logger
                     {
                         var optionSet = entity.OptionSets.FirstOrDefault(os => os.Name == field.Key);
                         if (optionSet == null)
-                            throw new NullReferenceException(field.Key + " isminde optionset tanımı bulunamadı.");
+                            throw new NullReferenceException(field.Key + " Could not find optionset definition named.");
 
                         return new CreateAttributeRequest
                         {
@@ -550,7 +550,6 @@ namespace XrmEarth.Logger
                                             o => o.Value.HasValue && o.Value.Value == option.Value.Value);
                                     if (crmOption == null)
                                     {
-                                        //Olması gereken option mevcut değilse.
                                         optionSetReport = new MetadataReport(MetadataType.OptionSet)
                                         {
                                             LogicalName = optionSet.Name,
@@ -564,14 +563,12 @@ namespace XrmEarth.Logger
                                 if (optionSetReport != null)
                                 {
                                     entityReport.AddChild(optionSetReport);
-                                    //OptionSet'te sorun oluğu için alanla birlikte tekrar oluşturulmalı
                                     attrReport.RepairOption = RepairOption.DeleteCreate;
                                     attrReport.IsValid = false;
                                 }
                             }
                             else
                             {
-                                //Özellik var fakat optionset değil
                                 attrReport.RepairOption = RepairOption.DeleteCreate;
                                 attrReport.IsValid = false;
                             }
@@ -586,14 +583,12 @@ namespace XrmEarth.Logger
 
                                 if (relation == null)
                                 {
-                                    //Özellik lookup fakat düzgün relation kurulmamış
                                     attrReport.RepairOption = RepairOption.DeleteCreate;
                                     attrReport.IsValid = false;
                                 }
                             }
                             else
                             {
-                                //Özellik var fakat lookup değil
                                 attrReport.RepairOption = RepairOption.DeleteCreate;
                                 attrReport.IsValid = false;
                             }
@@ -602,7 +597,6 @@ namespace XrmEarth.Logger
                         {
                             if (attributeMetadata.AttributeType.Value != field.Value.Item2)
                             {
-                                //Özellik var fakat tip uygun değil
                                 attrReport.RepairOption = RepairOption.DeleteCreate;
                                 attrReport.IsValid = false;
                             }
@@ -610,14 +604,12 @@ namespace XrmEarth.Logger
                     }
                     else
                     {
-                        //Özellik var fakat tipi belli değil
                         attrReport.RepairOption = RepairOption.DeleteCreate;
                         attrReport.IsValid = false;
                     }
                 }
                 else
                 {
-                    //Özellik yok
                     attrReport.RepairOption = RepairOption.Create;
                     attrReport.IsValid = false;
                 }
@@ -641,7 +633,7 @@ namespace XrmEarth.Logger
             var entityResponse = Connection.Service.Execute(entityRequest) as RetrieveEntityResponse;
             if (entityResponse == null)
                 throw new Exception(
-                    "Cevap beklenen şekilde değildi. Initializer>Load_EntityMedata>ServiceExecute_RetrieveEntityResponse");
+                    "The answer was not as expected. Initializer>Load_EntityMedata>ServiceExecute_RetrieveEntityResponse");
 
             return entityResponse.EntityMetadata;
         }
@@ -656,7 +648,7 @@ namespace XrmEarth.Logger
             var response = Connection.Service.Execute(entitiesRequest) as RetrieveAllEntitiesResponse;
             if (response == null)
                 throw new Exception(
-                    "Cevap beklenen şekilde değildi. Initializer>Load_EntityMedata>ServiceExecute_RetrieveAllEntitiesRequest");
+                    "The answer was not as expected. Initializer>Load_EntityMedata>ServiceExecute_RetrieveAllEntitiesRequest");
 
             _entities.Clear();
             foreach (var entityMetadata in response.EntityMetadata)
