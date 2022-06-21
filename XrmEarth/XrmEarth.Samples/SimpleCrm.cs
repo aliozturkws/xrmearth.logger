@@ -29,7 +29,7 @@ namespace XrmEarth.Samples
             var crmLogger = LogManager.CreateLogger(crmConnection);
             LogManager.RegisterAll(crmLogger);
 
-            LogManager.Info("Test Log Message", 15);
+            crmLogger.Info("Test Log Message", 15);
         }
 
         private void InstanceOnSystemNotify(SystemNotifyArgs e)
