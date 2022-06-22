@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xrm.Sdk;
 using Microsoft.Xrm.Tooling.Connector;
 
-namespace XrmEarth.Samples
+namespace XrmEarth.Logger.Console
 {
     class Program
     {
@@ -13,6 +13,8 @@ namespace XrmEarth.Samples
 
             SimpleCrm simpleCrm = new SimpleCrm(service);
             simpleCrm.Run();
+
+            System.Console.ReadKey();
         }
     }
 }

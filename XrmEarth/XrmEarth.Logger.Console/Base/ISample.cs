@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XrmEarth.Samples.Base
+namespace XrmEarth.Logger.Console.Base
 {
     public interface ISample
     {
@@ -48,12 +48,12 @@ namespace XrmEarth.Samples.Base
     {
         public void Write(string message)
         {
-            Console.Write(message);
+            System.Console.Write(message);
         }
 
         public void WriteLine(string message)
         {
-            Console.WriteLine(message);
+            System.Console.WriteLine(message);
         }
     }
 }

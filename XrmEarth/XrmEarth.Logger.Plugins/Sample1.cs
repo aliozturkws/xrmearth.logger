@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XrmEarth.Samples.Plugins
+namespace XrmEarth.Logger.Plugins
 {
     public class Sample1 : BasePlugin
     {

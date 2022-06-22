@@ -5,9 +5,9 @@ VisualStudioVersion = 15.0.28307.1340
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEarth.Logger", "XrmEarth.Logger\XrmEarth.Logger.csproj", "{FCD1B2A8-0B87-4655-BF97-7FC737E44524}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEarth.Samples", "XrmEarth.Samples\XrmEarth.Samples.csproj", "{F989AF17-444C-4EB3-986F-A7590CCA467E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEarth.Logger.Console", "XrmEarth.Logger.Console\XrmEarth.Logger.Console.csproj", "{F8E28D47-1B49-4EAA-8C16-623AFDEAEBD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEarth.Samples.Plugins", "XrmEarth.Samples.Plugins\XrmEarth.Samples.Plugins.csproj", "{D3016F5B-EF10-40CC-B04C-7370276D786B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XrmEarth.Logger.Plugins", "XrmEarth.Logger.Plugins\XrmEarth.Logger.Plugins.csproj", "{A72135E7-5B64-47FD-A511-B00DB076F6D7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +19,14 @@ Global
 		{FCD1B2A8-0B87-4655-BF97-7FC737E44524}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCD1B2A8-0B87-4655-BF97-7FC737E44524}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCD1B2A8-0B87-4655-BF97-7FC737E44524}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F989AF17-444C-4EB3-986F-A7590CCA467E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F989AF17-444C-4EB3-986F-A7590CCA467E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F989AF17-444C-4EB3-986F-A7590CCA467E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F989AF17-444C-4EB3-986F-A7590CCA467E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D3016F5B-EF10-40CC-B04C-7370276D786B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D3016F5B-EF10-40CC-B04C-7370276D786B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D3016F5B-EF10-40CC-B04C-7370276D786B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D3016F5B-EF10-40CC-B04C-7370276D786B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8E28D47-1B49-4EAA-8C16-623AFDEAEBD4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8E28D47-1B49-4EAA-8C16-623AFDEAEBD4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8E28D47-1B49-4EAA-8C16-623AFDEAEBD4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8E28D47-1B49-4EAA-8C16-623AFDEAEBD4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A72135E7-5B64-47FD-A511-B00DB076F6D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A72135E7-5B64-47FD-A511-B00DB076F6D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A72135E7-5B64-47FD-A511-B00DB076F6D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A72135E7-5B64-47FD-A511-B00DB076F6D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

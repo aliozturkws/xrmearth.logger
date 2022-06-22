@@ -6,11 +6,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D3016F5B-EF10-40CC-B04C-7370276D786B}</ProjectGuid>
+    <ProjectGuid>{A72135E7-5B64-47FD-A511-B00DB076F6D7}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>XrmEarth.Samples.Plugins</RootNamespace>
-    <AssemblyName>XrmEarth.Samples.Plugins</AssemblyName>
+    <RootNamespace>XrmEarth.Logger.Plugins</RootNamespace>
+    <AssemblyName>XrmEarth.Logger.Plugins</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -72,18 +72,18 @@
     <Compile Include="Sample1.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\XrmEarth.Logger\XrmEarth.Logger.csproj">
+      <Project>{fcd1b2a8-0b87-4655-bf97-7fc737e44524}</Project>
+      <Name>XrmEarth.Logger</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <None Include="ILMerge.props" />
     <None Include="key.snk" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="ILMergeOrder.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\XrmEarth.Logger\XrmEarth.Logger.csproj">
-      <Project>{fcd1b2a8-0b87-4655-bf97-7fc737e44524}</Project>
-      <Name>XrmEarth.Logger</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

@@ -5,7 +5,7 @@ using System;
 using System.Configuration;
 using System.Net;
 
-namespace XrmEarth.Samples
+namespace XrmEarth.Logger.Console
 {
     public class XrmConnection
     {

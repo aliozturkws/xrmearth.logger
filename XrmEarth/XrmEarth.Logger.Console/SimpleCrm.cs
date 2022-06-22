@@ -1,13 +1,12 @@
 ﻿using Microsoft.Xrm.Sdk;
 using System;
 using System.Text;
-using XrmEarth.Logger;
 using XrmEarth.Logger.Common;
+using XrmEarth.Logger.Console.Base;
 using XrmEarth.Logger.Enums;
 using XrmEarth.Logger.Exceptions;
-using XrmEarth.Samples.Base;
 
-namespace XrmEarth.Samples
+namespace XrmEarth.Logger.Console
 {
     public class SimpleCrm : BaseSample
     {

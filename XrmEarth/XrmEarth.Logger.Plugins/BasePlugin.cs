@@ -1,10 +1,9 @@
 ﻿using Microsoft.Xrm.Sdk;
 using System;
-using XrmEarth.Logger;
 using XrmEarth.Logger.Configuration;
 using XrmEarth.Logger.Logger;
 
-namespace XrmEarth.Samples.Plugins
+namespace XrmEarth.Logger.Plugins
 {
     public abstract class BasePlugin : IPlugin
     {

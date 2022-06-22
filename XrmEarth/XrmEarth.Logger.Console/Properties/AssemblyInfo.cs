@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("XrmEarth.Samples")]
+[assembly: AssemblyTitle("XrmEarth.Logger.Console")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("XrmEarth.Samples")]
+[assembly: AssemblyProduct("XrmEarth.Logger.Console")]
 [assembly: AssemblyCopyright("Copyright ©  2022")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("f989af17-444c-4eb3-986f-a7590cca467e")]
+[assembly: Guid("f8e28d47-1b49-4eaa-8c16-623afdeaebd4")]
 
 // Version information for an assembly consists of the following four values:
 //
