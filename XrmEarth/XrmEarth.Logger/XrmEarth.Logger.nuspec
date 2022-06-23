@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>XrmEarth.Logger</id>
+    <version>1.0.0</version>
+    <title>XrmEarth.Logger</title>
+    <authors>aliozturkws</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/aliozturkws/xrmearth.logger</projectUrl>
+    <description>It provides flexible assembly developments that you can use in your Dynamics CRM processes. Functions in this assembly aim to increase productivity by reducing development loads. Can be used in plugin, workflow assembly, windows console app, windows service, web service. </description>
+    <releaseNotes></releaseNotes>
+    <copyright>2022</copyright>
+    <tags>Custom Logger Dynamcis CRM Plugin Workflow Windows Console App</tags>
+  </metadata>
+</package>
