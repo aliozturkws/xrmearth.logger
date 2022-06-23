@@ -46,3 +46,8 @@ crmLogger.Error("Test Error", 1501, "Tag1 Value","Tag2 Value");
 crmLogger.Info("Test Info", 1502, "Tag1 Value", "Tag2 Value");
 crmLogger.Warning("Test Warning", 1502, "Tag1 Value", "Tag2 Value");
 ```
+### Install Nuget Package :blush:
+```
+Install-Package XrmEarth.Logger -Version 1.0.0
+```
+
